@@ -1,0 +1,18 @@
+{
+    "characters" : [
+        {"name":"Professor Ebony", "dialogue":[
+                {"output":"Hello!"},
+                {"output":"I'm Professor Ebony, an up-and-coming Pokémon researcher!"},
+                {"output":"I've come here to the REGION region to study the\nPokémon that live here!"},
+                {"output":"It's a big job though, and I'm in need of some help.\nYour mother said you might be interested?"},
+                {"output":"So what do you say,..."},
+                {"output":"..."},
+                {"output":"I don't think I ever asked your name!"},
+                {"prompt":"Enter your name:"},
+                {"output":"I see! It's very nice to meet you, "},
+                {"output":"My goodness, this late already? I must be getting back to work!"},
+                {"output":"If you're interested, come by my lab and I'll\nfill you in on the rest!"},
+                {"output":"See you!"}
+        ]}
+    ]
+}
