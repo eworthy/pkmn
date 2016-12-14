@@ -1,6 +1,7 @@
 package ui;
 
 import Exceptions.NoSavedGameException;
+import basicFunctions.MenuItem;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,13 +16,14 @@ import character.Player;
 import item.concreteItems.genericItems.*;
 import item.concreteItems.medicines.*;
 import item.concreteItems.pokeballs.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import ui.enums.GameState;
 
 public class GameManager {
     private static final String saveFile = "/Users/ellen/My Documents/NetBeansProjects/pkmnSave.txt";
 
-    private static final boolean TESTING = true;
+    private static final boolean TESTING = false;
     private static final String[] PLACEHOLDER_SPRITE_FILES = {};
 
     private static final String[] GAME_OPTIONS = {"Load Saved Game", "New Game", "Exit"};
@@ -39,6 +41,8 @@ public class GameManager {
         "Save Game",
         "Walk", //location.getChoice;
         "Exit"};
+    
+    private static ArrayList<MenuItem> CHOICES;
 
     private static final int EXIT = GAME_CHOICES.length;
 
@@ -96,7 +100,7 @@ public class GameManager {
         gameState = GameState.MAP;
         
         STARTER_POKEMON = new Pokemon[3];
-        STARTER_POKEMON[0] = new Pokemon(FIRE_STARTER, 15);
+        STARTER_POKEMON[0] = new Pokemon(FIRE_STARTER, 5);
         STARTER_POKEMON[1] = new Pokemon(WATER_STARTER, 5);
         STARTER_POKEMON[2] = new Pokemon(GRASS_STARTER, 5);
 
@@ -104,8 +108,17 @@ public class GameManager {
         STARTER_POKEMON_NAMES[0] = STARTER_POKEMON[0].getName();
         STARTER_POKEMON_NAMES[1] = STARTER_POKEMON[1].getName();
         STARTER_POKEMON_NAMES[2] = STARTER_POKEMON[2].getName();
+                
+                
+//                "Pokedex",
+//        "Pokémon",
+//        "Inventory",
+//        "Save Game",
+        //CHOICES = new ArrayList<MenuItem>();
+        //CHOICES.add(new MenuItem("Pokedex", GameManager::openPokedex()));
+        //MenuItem test = new MenuItem("Test", GameManager::loadGame);
     }
-
+    
     /*----------------------------------------- START MENU FUNCTIONS -----------------------------------------------*/
     public static void loadGame(Scanner keyInput) {
         try {
@@ -126,7 +139,7 @@ public class GameManager {
         //pretty much all of this needs to be the professor character's dialogue.
         // consider this being partly on a phone call, to still set up name etc?
         UserInput.printALine(keyInput, "Hello!");
-        UserInput.printALine(keyInput, "I'm Professor Ebony, an up-and-coming Pokémon researcher!");
+        UserInput.printALine(keyInput, "I'm Professor Maple, an up-and-coming Pokémon researcher!");
         UserInput.printALine(keyInput, "I've come here to the REGION region to study the\n"
                 + "Pokémon that live here!");
 
@@ -150,12 +163,12 @@ public class GameManager {
         }
 
         UserInput.printALine(keyInput, "Excellent! Right this way, please!");
-        UserInput.printALine(keyInput, "*You followed Professor Ebony.*");
+        UserInput.printALine(keyInput, "*You followed Professor Maple.*");
         UserInput.printALine(keyInput, "In order to study the Pokémon living here in the REGION region,\n"
                 + "I need to collect data about all of the species!");
         UserInput.printDots(keyInput);
         UserInput.printALine(keyInput, "I'd love to go myself, and see them all in person...");
-        UserInput.printALine(keyInput, "*Professor Ebony is staring wistfully into the distance.*");
+        UserInput.printALine(keyInput, "*Professor Maple is staring wistfully into the distance.*");
         UserInput.printDots(keyInput);
         UserInput.printALine(keyInput, "*You're not sure the professor remembers you're there.*");
 
@@ -166,7 +179,7 @@ public class GameManager {
         }
 
         UserInput.printALine(keyInput, "Huh?! Oh! I must have gotten a little distracted there...");
-        UserInput.printALine(keyInput, "*Professor Ebony strokes the back of her neck sheepishly.*");
+        UserInput.printALine(keyInput, "*Professor Maple strokes the back of her neck sheepishly.*");
         UserInput.printALine(keyInput, "As I was saying, I'd do it myself if I could, but I'm so busy\n"
                 + "in the lab, I'm afraid I just don't have time!");
         UserInput.printALine(keyInput, "What do you say? Would you be able to do it for me?");
@@ -190,7 +203,7 @@ public class GameManager {
         UserInput.printALine(keyInput, "Received the " + pokedex.getName() + "!");
         UserInput.printALine(keyInput, "And of course, I wouldn't send you into the wilds unprotected!");
         UserInput.printALine(keyInput, "*The professor looks around for something.*");
-        UserInput.printALine(keyInput, "Ah, here we go! *Professor Ebony holds up three Pokeballs.*");
+        UserInput.printALine(keyInput, "Ah, here we go! *Professor Maple holds up three Pokeballs.*");
         UserInput.printALine(keyInput, "Someone left these with me, and I'm afraid I can't take care of all of them.\n"
                 + "You can take one with you on your journey!");
 
@@ -248,6 +261,9 @@ public class GameManager {
                 //this is exit
             }
         }
+//        CHOICES = new ArrayList<MenuItem>();
+//        
+//        while (choice != 0)
         if (UserInput.makeMenu(keyInput, "Save before quitting?", UserInput.CHOICES) == UserInput.YES) {
             saveGame(saveFile);
         }

@@ -1,6 +1,7 @@
 package map.tile;
 
 import basicFunctions.Interactive;
+import basicFunctions.MenuItem;
 import java.io.Serializable;
 import map.GridMap;
 import map.enums.Direction;
@@ -16,6 +17,7 @@ public abstract class Tile implements Serializable, Interactive {
     private boolean exit = false;
     private Tile next;
     private Direction exitDirection;
+    private MenuItem[] options;
 
     public Tile(Object occupant) {
         this.occupant = occupant;

@@ -28,6 +28,10 @@ public class GridMap {
         //this.length = map.length;
     }
 
+    public GridMap(String NAME, char[][] charMap) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getName() {
         return name;
     }

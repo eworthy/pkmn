@@ -5,7 +5,6 @@ package location;
 
 import item.Purchasable;
 import map.GridMap;
-import map.tile.Tile;
 import pokemon.Pokemon;
 
 /**
@@ -24,6 +23,7 @@ public class PokemonCenter extends Shop {
 
     /**
      *
+     * @param stock
      */
     public PokemonCenter(Purchasable[] stock) {
         super(NAME, DESCRIPTION, OPTIONS, stock);

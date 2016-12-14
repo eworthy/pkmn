@@ -44,63 +44,6 @@ public class Species implements Serializable {
     private final double height;
     private final double weight;
 
-//    /**
-//     * Makes a Species with no individual variables to store in the Pokedex
-//     *
-//     * @param species
-//     * @param description
-//     * @param eggGroup
-//     * @param percentMale
-//     * @param height
-//     * @param weight
-//     * @param type
-//     * @param speciesBaseStats
-//     * @param modifier
-//     * @param catchChance
-//     * @param bottomEvolution
-//     * @param nextEvolution
-//     * @param evRewardValue
-//     * @param evRewardType
-//     * @param canEvolve
-//     * @param evolveLevel
-//     * @param evolveConditions
-//     * @param abilities
-//     * @param percentLikelihoodAbilities
-//     *
-//     */
-//    public Species(PkmnSpecies species, String description,
-//            EggGroup[] eggGroup, int percentMale, double height, double weight,
-//            PkmnType[] type, int[] speciesBaseStats, int[] modifier,
-//            int catchChance, PkmnSpecies bottomEvolution,
-//            PkmnSpecies nextEvolution,
-//            int evRewardValue, Stat evRewardType,
-//            boolean canEvolve, int evolveLevel, boolean[] evolveConditions,
-//            Ability[] abilities, int[] percentLikelihoodAbilities) {
-////        this.species = species;
-//        this.name = species.name();
-//        this.description = description;
-//        this.eggGroup = eggGroup;
-//        this.percentMale = percentMale;
-//        this.height = height;
-//        this.weight = weight;
-//        this.speciesBaseStats = speciesBaseStats;
-//        this.modifier = modifier;
-//        this.types = type;
-//        this.catchChance = catchChance;
-////        this.bottomEvolution = bottomEvolution;
-////        this.nextEvolution = nextEvolution;
-//        this.evRewardValue = evRewardValue;
-//        this.evRewardType = evRewardType;
-//        this.canEvolve = canEvolve;
-//        this.evolveLevel = evolveLevel;
-//        this.evolveCondtions = evolveConditions;
-//        this.abilities = abilities;
-//        this.percentLikelihoodAbilities = percentLikelihoodAbilities;
-//        
-//        pokedexNo = species.ordinal();
-//
-//        Pokedex.addSpecies(this);
-//    }
     public Species(int pokedexNo, String name, String desc, String[] eggGroup,
             int hatchSteps, int percentMale, double height, double weight,
             String[] types, int[] baseStats, int[] mod, int catchChance,
