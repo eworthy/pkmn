@@ -1,0 +1,9 @@
+class Pokedex:
+    NAME = "POKEDEX"
+    NUM_PKMN = 150
+
+    def __init__(self):
+        self.pkmn_info = {}
+
+    def get_pokemon_species_info(self, pokedex_no):
+        return self.pkmn_info[pokedex_no]

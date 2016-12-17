@@ -1,0 +1,17 @@
+##Tile types:
+"""
+  Grass
+  Berry (soil)
+  Sand
+  Cliff
+  Cave
+  Water
+  WaterFall
+  Tree
+  Steep
+  RockyCliff
+  Marsh
+  Forest
+  Ice
+  Snow
+"""

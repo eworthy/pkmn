@@ -1,0 +1,295 @@
+import uuid
+from enum import Enum
+import random
+
+import switch
+import pokedex
+
+FEMALE = 0
+MALE = 1
+NO_GENDER = 2
+
+MIN_LEVEL = 1
+MAX_LEVEL = 100
+
+MAX_EV = 510
+MAX_EV_PER_STAT = 252
+
+MAX_IV = 31
+
+BASE_FRIENDLINESS = 70
+
+SHINY_CHANCE = 10000
+
+CONDITION_EFFECT_VALUES = {'PSN': 1.5, 'BRN': 1.5, 'PRZ': 1.5,
+                           'FRZ': 2, 'SLP': 2}
+
+class PkmnType(Enum):
+    FIRE = 0
+    WATER = 1
+    GRASS = 2
+    NORMAL = 3
+    FLYING = 4
+    ELECTRIC = 5
+    GROUND = 6
+    ICE = 7
+    DARK = 8
+    GHOST = 9
+    DRAGON = 10
+    PSYCHIC = 11
+    BUG = 12
+    POISON = 13
+    ROCK = 14
+    STEEL = 15
+    FAIRY = 16
+    FIGHTING = 17
+
+
+
+
+class Stats(Enum):
+    ATTACK = 0
+    DEFENSE = 1
+    SP_ATTACK = 2
+    SP_DEFENSE = 3
+    SPEED = 4
+    ACCURACY = 5
+    EVASIVENESS = 6
+    HP = 7
+    
+
+
+
+class LevelGrowthRate(Enum):
+    FAST = 0
+    MEDIUM_FAST = 1
+    MEDIUM_SLOW = 2
+    SLOW = 3
+
+
+
+
+class Nature(Enum):
+    HARDY, LONELY, BRAVE, ADAMANT, NAUGHTY, BOLD, DOCILE = range(7)
+    RELAXED, IMPISH, LAX, TIMID, HASTY, SERIOUS, JOLLY = range(8, 15)
+    NAIVE, MODEST, MILD, QUIET, BASHFUL, RASH, CALM = range(16, 23)
+    SASSY, CAREFUL, QUIRKY = range(24, 27)
+
+
+
+
+class Species:
+    def __init__(self, pokedex_no, name, desc, egg_group, hatch_steps,
+                 percent_male, height, weight, types, catch_chance,
+                 bottom_evol, next_evol, ev_reward_value, ev_reward_type):
+        self.pokedex_no = pokedex_no
+        self.name = name
+        self.desc = desc
+        self.egg_group = egg_group
+        self.hatch_steps = hatch_steps
+        self.percent_male = percent_male
+        self.height = height
+        self.weight = weight
+        self.types = types
+        self.catch_chance = catch_chance
+        self.bottom_evol = bottom_evol
+        self.next_evol = next_evol
+        self.ev_reward_value = ev_reward_value
+        self.ev_reward_type = ev_reward_type
+
+
+
+
+class Pokemon:
+    def __init__(self, pokedex_no, level):
+        self.pkmn_id = uuid.uuid4()
+        self.species = pokedex.get_pokemon_species_info(pokedex_no)
+        self.level = level
+        self.gender = generate_gender()
+
+        self.shiny = randomize_shiny()
+        self.level_growth_rate = randomize_level_growth_rate()
+        update_exp_to_next_level(self)
+
+        self.base_stats = []
+        self.stat_multipliers = []
+        self.current_multipliers = []
+
+        ##TODO stat generation
+
+        generate_ivs(self.ivs)
+
+        calculate_max_hp(self, level)
+        self.currentHP = maxHP
+        self.friendliness = BASE_FRIENDLINESS
+
+        randomize_nature()
+
+    def randomize_shiny():
+        return random.randint(0, SHINY_CHANCE) == 0
+
+    def randomize_level_growth_rate():
+        i = random.randint(0, 3)
+        for case in switch(i):
+            if case(0):
+                return LevelGrowthRate.FAST
+            if case(1):
+                return LevelGrowthRate.MEDIUM_FAST
+            if case(2):
+                return LevelGrowthRate.MEDIUM_SLOW
+            if case(3):
+                return LevelGrowthRate.SLOW
+        raise BadPokemonException("Bad LevelGrowthRate")
+
+    def generate_ivs(ivs):
+        for i in range(0, ivs.len):
+            ivs[i] = random.randint(0, MAX_IV)
+
+    def randomize_nature():
+        i = random.randint(0, 24)
+        for case in switch(i):
+            if case(0):
+                return Nature.HARDY
+            elif case(1):
+                nature_stats(Stats.ATTACK, Stats.DEFENSE)
+                return Nature.LONELY
+            elif case(2):
+                nature_stats(Stats.ATTACK, Stats.SPEED)
+                return Nature.BRAVE;
+            elif case(3):
+                nature_stats(Stats.ATTACK, Stats.SP_ATTACK)
+                return Nature.ADAMANT;
+            elif case(4):
+                nature_stats(Stats.ATTACK, Stats.SP_DEFENSE)
+                return Nature.NAUGHTY;
+            elif case(5):
+                nature_stats(Stats.DEFENSE, Stats.ATTACK)
+                return Nature.BOLD;
+            elif case(6):
+                return Nature.DOCILE;
+            elif case(7):
+                nature_stats(Stats.DEFENSE, Stats.SPEED)
+                return Nature.RELAXED;
+            elif case(8):
+                nature_stats(Stats.DEFENSE, Stats.SP_ATTACK)
+                return Nature.IMPISH;
+            elif case(9):
+                nature_stats(Stats.DEFENSE, Stats.SP_DEFENSE)
+                return Nature.LAX;
+            elif case(10):
+                nature_stats(Stats.SPEED, Stats.ATTACK)
+                return Nature.TIMID;
+            elif case(11):
+                nature_stats(Stats.SPEED, Stats.DEFENSE)
+                return Nature.HASTY;
+            elif case(12):
+                return Nature.SERIOUS;
+            elif case(13):
+                nature_stats(Stats.SPEED, Stats.SP_ATTACK)
+                return Nature.JOLLY;
+            elif case(14):
+                nature_stats(Stats.SPEED, Stats.SP_DEFENSE)
+                return Nature.NAIVE;
+            elif case(15):
+                nature_stats(Stats.SP_ATTACK, Stats.ATTACK)
+                return Nature.MODEST
+            elif case(16):
+                nature_stats(SP_ATTACK, DEFENSE)
+                return Nature.MILD
+            elif case(17):
+                nature_stats(SP_ATTACK, SPEED)
+                return Nature.QUIET;
+            elif case(18):
+                return Nature.BASHFUL;
+            elif case(19):
+                nature_stats(SP_ATTACK, SP_DEFENSE)
+                return Nature.RASH;
+            elif case(20):
+                nature_stats(SP_DEFENSE, ATTACK)
+                return Nature.CALM;
+            elif case(21):
+                nature_stats(SP_DEFENSE, DEFENSE)
+                return Nature.GENTLE
+            elif case(22):
+                nature_stats(SP_DEFENSE, SPEED)
+                return Nature.SASSY
+            elif case(23):
+                nature_stats(SP_DEFENSE, SP_ATTACK)
+                return Nature.CAREFUL
+            elif case(24):
+                return Nature.QUIRKY;
+
+    def nature_stats(raised_stat, lowered_stat):
+        pass
+
+    def randomize_ability():
+        pass
+
+    def generate_gender():
+        if species.get_percent_male() == -1:
+            return NO_GENDER
+        if random.randint(100) <= species.get_percent_male():
+            return MALE
+        return FEMALE
+
+    def calculate_max_hp(level):
+        return (((ivs[HP] + (2 * baseHP)
+                  + (evs[HP] / 4)) * level) / 100) + 10 + level
+
+    def add_exp(self, exp):
+        self.exp += exp
+        if self.exp <= self.exp_to_next_level:
+            exp = (self.exp + exp) - self.exp_to_next_level
+            level_up(self)
+            self.exp += exp
+
+    def set_friendliness(self, friendliness):
+        self.friendliness += (friendliness * friendliness_multiplier)
+        if self.friendliness < 0:
+            self.friendliness = 0
+        elif self.friendliness > MAX_FRIENDLINESS:
+            self.friendliness = MAX_FRIENDLINESS
+
+    def set_nickname(self, nickname):
+        self.nickname = nickname
+
+    def can_breed(self, mate):
+        for e in self.egg_group and e in mate.egg_group:
+            if e == EggGroup.UNDISCOVERED:
+                return False
+        return mate.egg_group == self.egg_group and mate.gender != self.gender
+
+    def breed(self, mate):
+        if can_breed(self, mate):
+            pass
+
+    def evolve(self):
+        if can_evolve(self):
+            pass
+
+    def level_up(self):
+        self.level += 1
+        evolve(self)
+        update_stats(self)
+        self.exp = 0
+        update_exp_to_next_level(self)
+
+    def update_exp_to_next_level(self):
+        if self.level_growth_rate == LevelGrowthRate.FAST:
+            self.exp_to_next_level = .8 * self.level**3
+        elif self.level_growth_rate == LevelGrowthRate.MEDIUM_FAST:
+            self.exp_to_next_level = self.level**3
+        elif self.level_growth_rate == LevelGrowthRate.MEDIUM_SLOW:
+            self.exp_to_next_level = (1.2 * self.level**3)
+            - (15 * self.level**2) + (100 * self.level) - 140
+        elif self.level_growth_rate == LevelGrowthRate.SLOW:
+            self.exp_to_next_level = 1.25 * self.level**3
+
+        if self.exp_to_next_level < 1:
+            self.exp_to_next_level = 1
+
+    def is_fainted(self):
+        return self.current_hp == 0
+
+    def __str__(self):
+        pass

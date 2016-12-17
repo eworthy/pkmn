@@ -1,0 +1,22 @@
+class Species:
+    def __init__(self, pokedex_no, name, desc, egg_group, hatch_steps,
+                 percent_male, height, weight, types, catch_chance,
+                 bottom_evol, next_evol, ev_reward_value, ev_reward_type,
+                 abilities, moveset, can_evolve, evolve_level,
+                 evolve_conditions, seen=False, found=False):
+        self.pokedex_no = pokedex_no
+        self.name = name
+        self.desc = desc
+        self.egg_group = egg_group
+        self.hatch_steps = hatch_steps
+        self.percent_male = percent_male
+        self.height = height
+        self.weight = weight
+        self.types = types
+        self.catch_chance = catch_chance
+        self.bottom_evol = bottom_evol
+        self.next_evol = next_evol
+        self.ev_reward_value = ev_reward_value
+        self.ev_reward_type = ev_reward_type
+        self.seen = seen
+        self.found = found

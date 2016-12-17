@@ -1,0 +1,37 @@
+import userinput
+
+TITLE = "Pokemon Storage System:"
+CHOICES = ["Deposit Pokémon",
+           "Pick Up Pokémon",
+           "Switch Pokémon",
+           "Move Items"]
+
+NUM_BOXES = 18
+
+class Box:
+    def __init__(self, name):
+        self.name = name
+        self.pokemon = []
+
+    def set_name(self, name):
+        if name in storage:
+            raise ValueError("Duplicate name")
+        storage[name] = self
+        if self.name in storage:
+            del storage[self.name]
+        self.name = name
+
+
+storage = {}
+
+def set_initial_boxes():
+    for i in range(NUM_BOXES):
+        name = "BOX {0}".format(i + 1)
+        storage[name] = Box(name)
+    
+
+def rename(old_name, new_name):
+    ##todo decide where to handle exceptions (keyerror, valueerror)
+    storage[old_name].set_name(new_name)
+
+

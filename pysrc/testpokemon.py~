@@ -1,0 +1,11 @@
+import pokemon
+
+def test_pokemon():
+    p = pokemon.Pokemon(0, 10)
+    print(p.level)
+    print(p.shiny)
+
+if __name__ == "__main__":
+    test_pokemon()
+
+

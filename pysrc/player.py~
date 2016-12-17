@@ -1,0 +1,43 @@
+import uuid
+
+INVENTORY_TITLES = ["Items", "Medicine", "Pokeballs", "Berry Pouch",
+                    "Battle Items", "TMs and HMs", "Key Items"]
+GENERAL_ITEMS = 0
+MEDICINE = 1;
+POKEBALLS = 2;
+BERRY_POUCH = 3;
+BATTLE_ITEMS = 4;
+TMS_AND_HMS = 5;
+KEY_ITEMS = 6;
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.inventory = Inventory.set_up_inventory()
+        self.my_pkmn = []
+        self.money = 0
+        self.player_id = uuid.uuid4()
+
+    def get_money(self):
+        return self.money
+
+    def set_money(self, change):
+        self.money += change
+
+    def get_id(self):
+        return self.player_id
+
+
+class Inventory:
+    def set_up_inventory(self):
+        general_items = []
+        berry_pouch = []
+        pokeballs = []
+        battle_items = []
+        medicine_pouch = []
+        tms_and_hms = []
+        key_items = []
+
+        self.inventory[GENERAL_ITEMS] = general_items
+                self.inventory[GENERAL_ITEMS] = general_items
+
